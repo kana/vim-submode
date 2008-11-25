@@ -1,0 +1,216 @@
+*submode.txt*	Create your own submodes
+
+Version 0.0.0
+Copyright (C) 2008 kana <http://whileimautomaton.net/>
+License: MIT license  {{{
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+}}}
+
+CONTENTS					*submode-contents*
+
+Introduction		|submode-introduction|
+Interface		|submode-interface|
+  Functions		  |submode-functions|
+  Variables		  |submode-variables|
+Bugs			|submode-bugs|
+Changelog		|submode-changelog|
+
+
+
+
+==============================================================================
+INTRODUCTION					*submode-introduction*
+
+*submode* is a Vim plugin to provide the way to define "submodes" to the
+built-in |vim-modes|.  For example, whenever you type |g-| and/or |g+| to
+undo/redo many times, don't you want to type "g++--++..." instead
+"g+g+g-g-g+g+..."?  With this plugin, you can define such interface with the
+following settings:
+>
+	call submode#enter_with('undo/redo', 'n', '', 'g-', 'g-')
+	call submode#enter_with('undo/redo', 'n', '', 'g+', 'g+')
+	call submode#leave_with('undo/redo', 'n', '', '<Esc>')
+	call submode#map('undo/redo', 'n', '', '-', 'g-')
+	call submode#map('undo/redo', 'n', '', '+', 'g+')
+<
+The above settings mean:
+- Define a new submode named "undo/redo".
+- Define "g-" and "g+" as key sequences to enter the submode "undo/redo" from
+  Normal mode.  Aditionally, they does undo/redo before entering the submode
+  "undo/redo".
+- In the submode "undo/redo", "-" and "+" do undo/redo.
+- In the submode "undo/redo", "<Esc>" leaves the submode.
+
+						*submode-leaving*
+By default, <Esc> and <C-c> are automatically defined as keys to leave the
+submde.  So you don't have to explicitly define like the above example.
+There are also 2 ways to leave submodes:
+- Type any key which is not mapped in the submode.  If you do so, the typed
+  key will be executed after leaving the submode.  For example, typing "x"
+  does leave the submode then delete a character under the cursor.
+- Don't type any key for a long time.  See |submode-variables| to configure
+  the time.
+
+
+Requirements:
+- Vim 7.2 or later
+
+
+
+
+==============================================================================
+INTERFACE					*submode-interface*
+
+------------------------------------------------------------------------------
+FUNCTIONS					*submode-functions*
+
+						*submode#enter_with()*
+submode#enter_with({submode}, {modes}, {options}, {lhs}, [{rhs}])
+			Define a key mapping to enter the {submode} from
+			{modes}.  If {rhs} is given, it will be executed
+			whenever entering the {submode} by {lhs}.
+
+			See |submode#map()| for the details of arguments.
+
+						*submode#leave_with()*
+submode#leave_with({submode}, {modes}, {options}, {lhs})
+			Define a key mapping ({lhs}) to leave the {submode} in
+			{modes}.
+
+			See |submode#map()| for the details of arguments.
+
+						*submode#map()*
+submode#map({submode}, {modes}, {options}, {lhs}, {rhs})
+			Define a key mapping ({lhs} to {rhs}) in the {submode}
+			in {modes}.
+
+			{submode}	String
+				The name of the submode.  It is recommended to
+				use only the following characters:
+
+				Alphabets	A-Z, a-z
+				Digits		0-9
+				Some symbols	-, _, /
+
+			{modes}		String
+				A sequence of letters which specifies the
+				modes to define a key mapping.  The meanings
+				of letters are as follows:
+
+				c	Command-line mode
+				i	Insert mode
+				l	|language-mapping|
+				n	Normal mode
+				o	Operator-pending mode
+				s	Select mode only
+				v	Visual mode and Select mode
+				x	Visual mode only
+
+			{options}	String
+				A sequence of letters which specifies some
+				options for a key mapping to be defined.  The
+				meanings of letters are as follows:
+
+				b	Same as |:map-<buffer>|.
+				e	Same as |:map-<expr>|.
+				r	{rhs} may be remapped.
+					If this letter is not included,
+					{rhs} will be never remapped.
+				s	Same as |:map-<silent>|.
+				u	Same as |:map-<unique>|.
+				x	After executing {rhs}, leave the
+					submode.  This matters only for
+					|submode#map()|.
+
+			{lhs}		String
+				A key sequence to type.
+
+				To denote a special key such as <Esc>, write
+				it in <>-escaped form instead of the character
+				as is.  For example, use '<Esc>' instead of
+				"\<Esc>".
+
+			{rhs}	String
+				A key sequence to be executed by typing {lhs}.
+
+				See also {lhs} for other notes.
+
+						*submode#unmap()*
+submode#unmap({submode}, {modes}, {options}, {lhs})
+			Delete a key mapping ({lhs} to something) in the
+			{submode} in {modes}.
+
+			See |submode#map()| for the details of arguments.
+			Note that only "b" matters for {options} and other
+			letters are just ignored.
+
+------------------------------------------------------------------------------
+VARIABLES					*submode-variables*
+
+g:submode_timeout	boolean (default: same as 'timeout')
+	If this value is true, time out on submodes is enabled.  Otherwise,
+	time out is disabled.  If time out is enabled, not typing any key in
+	a submode for a long time causes to leave the submode.
+
+	If this variable is not defined, the value of 'timeout' is used
+	instead.
+
+g:submode_timeoutlen	number (default: same as 'timeoutlen')
+	The time in milliseconds that is waited for typing keys in a submode.
+
+	If this variable is not defined, the value of 'timeoutlen' is used
+	instead.
+
+
+
+
+==============================================================================
+BUGS						*submode-bugs*
+
+- Show a mode indicator like 'showmode'.
+
+- Another style to leave a submode like Visual mode: Unbound key sequences are
+  just ignored and don't cause to leave a submode.
+
+- The last keys in unbound key sequences will be executed, but they should be
+  ignored like unbound key sequences in Visual mode and Operator-pending mode.
+
+- Unmap mappings for a submode properly.  The current inplementation just
+  replaces rhs with <Nop>, but it may cause some problems.
+
+- Add commands like |:map| and others to deal with submode mappings for
+  readability.
+
+- There are many bugs around the world.
+
+
+
+
+==============================================================================
+CHANGELOG					*submode-changelog*
+
+0.0.0	2008-11-27T01:58:43+09:00
+	- Initial version.
+
+
+
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:fen:fdl=0:fdm=marker:
