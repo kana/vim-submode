@@ -155,9 +155,11 @@ function! s:define_entering_mapping(submode, mode, options, lhs, rhs)  "{{{2
   \       s:named_key_prefix(a:submode)
   \       s:named_key_leave(a:submode)
   execute s:map_command(a:mode, '')
-  \       s:map_options('e')
+  \       s:map_options('')
   \       s:named_key_leave(a:submode)
-  \       printf('<SID>on_leaving_submode(%s)', string(a:submode))
+  \       printf('%s<SID>on_leaving_submode(%s)<Return>',
+  \              a:mode =~# '[ic]' ? '<C-r>=' : '@=',
+  \              string(a:submode))
 
   return
 endfunction
@@ -368,6 +370,11 @@ function! s:on_leaving_submode(submode)  "{{{2
   if s:original_showmode && s:may_override_showmode_p(mode())
     echo ''
     redraw
+  endif
+  if getchar(1) isnot 0
+    " To completely ignore unbound key sequences in a submode,
+    " here we have to fetch and drop the last key in the key sequence.
+    call getchar()
   endif
   call s:restore_options()
   return ''

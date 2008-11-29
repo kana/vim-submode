@@ -62,11 +62,9 @@ The above settings mean:
 By default, <Esc> and <C-c> are automatically defined as keys to leave the
 submde.  So you don't have to explicitly define like the above example.
 There are also 2 ways to leave submodes:
-- Type any key which is not mapped in the submode.  If you do so, the typed
-  key will be executed after leaving the submode.  For example, typing "x"
-  does leave the submode then delete a character under the cursor.
+- Type any key sequence which is not mapped in the submode.
 - Don't type any key for a long time.  See |submode-variables| to configure
-  the time.
+  the details of this time out.
 
 
 Requirements:
@@ -116,12 +114,16 @@ submode#map({submode}, {modes}, {options}, {lhs}, {rhs})
 
 				c	Command-line mode
 				i	Insert mode
-				l	|language-mapping|
 				n	Normal mode
-				o	Operator-pending mode
 				s	Select mode only
 				v	Visual mode and Select mode
 				x	Visual mode only
+
+				Note that Operator-pending mode and
+				|language-mapping| are not supported, because
+				the both modes are always leaved by 1 key
+				sequence, so that submdoes can't be built on
+				the both modes.
 
 			{options}	String
 				A sequence of letters which specifies some
@@ -189,9 +191,6 @@ BUGS						*submode-bugs*
 
 - Another style to leave a submode like Visual mode: Unbound key sequences are
   just ignored and don't cause to leave a submode.
-
-- The last keys in unbound key sequences will be executed, but they should be
-  ignored like unbound key sequences in Visual mode and Operator-pending mode.
 
 - Unmap mappings for a submode properly.  The current inplementation just
   replaces rhs with <Nop>, but it may cause some problems.
