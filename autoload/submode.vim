@@ -138,7 +138,7 @@ function! s:define_entering_mapping(submode, mode, options, lhs, rhs)  "{{{2
   execute s:map_command(a:mode, '')
   \       s:map_options('e')
   \       s:named_key_before_entering(a:submode)
-  \       '<SID>set_up_options()'
+  \       printf('<SID>on_entering_submode(%s)', string(a:submode))
   execute s:map_command(a:mode, 'r')
   \       s:map_options('')
   \       s:named_key_enter(a:submode)
@@ -151,7 +151,7 @@ function! s:define_entering_mapping(submode, mode, options, lhs, rhs)  "{{{2
   execute s:map_command(a:mode, '')
   \       s:map_options('e')
   \       s:named_key_leave(a:submode)
-  \       '<SID>restore_options()'
+  \       printf('<SID>on_leaving_submode(%s)', string(a:submode))
 
   return
 endfunction
@@ -165,7 +165,7 @@ function! s:define_submode_mapping(submode, mode, options, lhs, rhs)  "{{{2
   \       (s:named_key_prefix(a:submode) . a:lhs)
   \       (s:named_key_rhs(a:submode, a:lhs)
   \        . (s:has_flag_p(a:options, 'x')
-  \           ? ''
+  \           ? s:named_key_leave(a:submode)
   \           : s:named_key_prefix(a:submode)))
   execute s:map_command(a:mode, s:filter_flags(a:options, 'r'))
   \       s:map_options(s:filter_flags(a:options, 'besu'))
@@ -323,6 +323,25 @@ endfunction
 
 
 
+function! s:on_entering_submode(submode)  "{{{2
+  call s:set_up_options()
+  " echohl ModeMsg
+  " echo '-- Submode:' a:submode '--'
+  " echohl None
+  return ''
+endfunction
+
+
+
+
+function! s:on_leaving_submode(submode)  "{{{2
+  call s:restore_options()
+  return ''
+endfunction
+
+
+
+
 function! s:remove_flag(s, c)  "{{{2
   " Assumption: a:c is not a meta character.
   return substitute(a:s, a:c, '', 'g')
@@ -336,7 +355,8 @@ function! s:restore_options()  "{{{2
   let &timeoutlen = s:original_timeoutlen
   let &ttimeout = s:original_ttimeout
   let &ttimeoutlen = s:original_ttimeoutlen
-  return ''
+
+  return
 endfunction
 
 
@@ -355,7 +375,7 @@ function! s:set_up_options()  "{{{2
   \                  ? s:original_timeoutlen
   \                  : s:original_ttimeoutlen
 
-  return ''
+  return
 endfunction
 
 
