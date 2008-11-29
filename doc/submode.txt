@@ -59,8 +59,8 @@ The above settings mean:
 - In the submode "undo/redo", "<Esc>" leaves the submode.
 
 						*submode-leaving*
-By default, <Esc> and <C-c> are automatically defined as keys to leave the
-submde.  So you don't have to explicitly define like the above example.
+By default, <Esc> is automatically defined as a key to leave any submode.
+So you don't have to explicitly define like the above example.
 There are also 2 ways to leave submodes:
 - Type any key sequence which is not mapped in the submode.
 - Don't type any key for a long time.  See |submode-variables| to configure

@@ -129,7 +129,6 @@ function! s:define_entering_mapping(submode, mode, options, lhs, rhs)  "{{{2
     " When the given submode is not defined yet - define the default key
     " mappings to leave the submode.
     call submode#leave_with(a:submode, a:mode, a:options, '<Esc>')
-    call submode#leave_with(a:submode, a:mode, a:options, '<C-c>')
   endif
 
   execute s:map_command(a:mode, s:filter_flags(a:options, 'r'))
