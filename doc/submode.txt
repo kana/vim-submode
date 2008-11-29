@@ -192,14 +192,14 @@ BUGS						*submode-bugs*
 - If 'showmode' is enabled, this plugin shows the current submode like it.
   But it may cause minor problems on display after leaving a submode.
 
-- Another style to leave a submode like Visual mode: Unbound key sequences are
-  just ignored and don't cause to leave a submode.
-
 - Unmap mappings for a submode properly.  The current inplementation just
   replaces rhs with <Nop>, but it may cause some problems.
 
 - Add commands like |:map| and others to deal with submode mappings for
   readability.
+
+- To behave the same as Normal mode and Visual mode, any unbound key sequence
+  should be ignored in a submode, but it's impossible to implement.
 
 - There are many bugs around the world.
 
