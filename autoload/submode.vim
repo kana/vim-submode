@@ -36,7 +36,8 @@
 " noremap <Plug>(submode-before-entering:{submode})
 " \       {tweaking 'timeout' and others}
 " map <Plug>(submode-enter:{submode})
-" \   <Plug>(submode-prefix:{submode})
+" \   <Plug>(submode-before-action:{submode})
+"    \<Plug>(submode-prefix:{submode})
 "
 " map <Plug>(submode-prefix:{submode})
 " \   <Plug>(submode-leave:{submode})
@@ -44,7 +45,7 @@
 " \   <Plug>(submode-leave:{submode})
 " map <Plug>(submode-prefix:{submode}){lhs}
 " \   <Plug>(submode-rhs:{submode}:for:{lhs})
-"    \<Plug>(submode-prefix:{submode})
+"    \<Plug>(submode-enter:{submode})
 " MAP <Plug>(submode-rhs:{submode}:for:{lhs})
 " \   {rhs}
 
@@ -142,8 +143,13 @@ function! s:define_entering_mapping(submode, mode, options, lhs, rhs)  "{{{2
   execute s:map_command(a:mode, 'r')
   \       s:map_options('')
   \       s:named_key_enter(a:submode)
-  \       s:named_key_prefix(a:submode)
+  \       (s:named_key_before_action(a:submode)
+  \        . s:named_key_prefix(a:submode))
 
+  execute s:map_command(a:mode, '')
+  \       s:map_options('e')
+  \       s:named_key_before_action(a:submode)
+  \       printf('<SID>on_executing_action(%s)', string(a:submode))
   execute s:map_command(a:mode, 'r')
   \       s:map_options('')
   \       s:named_key_prefix(a:submode)
@@ -166,7 +172,7 @@ function! s:define_submode_mapping(submode, mode, options, lhs, rhs)  "{{{2
   \       (s:named_key_rhs(a:submode, a:lhs)
   \        . (s:has_flag_p(a:options, 'x')
   \           ? s:named_key_leave(a:submode)
-  \           : s:named_key_prefix(a:submode)))
+  \           : s:named_key_enter(a:submode)))
   execute s:map_command(a:mode, s:filter_flags(a:options, 'r'))
   \       s:map_options(s:filter_flags(a:options, 'besu'))
   \       s:named_key_rhs(a:submode, a:lhs)
@@ -281,6 +287,13 @@ endfunction
 
 
 
+function! s:named_key_before_action(submode)  "{{{2
+  return printf('<Plug>(submode-before-action:%s)', a:submode)
+endfunction
+
+
+
+
 function! s:named_key_before_entering(submode)  "{{{2
   return printf('<Plug>(submode-before-entering:%s)', a:submode)
 endfunction
@@ -325,6 +338,13 @@ endfunction
 
 function! s:on_entering_submode(submode)  "{{{2
   call s:set_up_options()
+  return ''
+endfunction
+
+
+
+
+function! s:on_executing_action(submode)  "{{{2
   " echohl ModeMsg
   " echo '-- Submode:' a:submode '--'
   " echohl None
@@ -335,6 +355,8 @@ endfunction
 
 
 function! s:on_leaving_submode(submode)  "{{{2
+  " echo ''
+  " redraw
   call s:restore_options()
   return ''
 endfunction
