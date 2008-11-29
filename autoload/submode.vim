@@ -58,6 +58,10 @@
 
 " Variables  "{{{1
 
+if !exists('g:submode_keyseqs_to_leave')
+  let g:submode_keyseqs_to_leave = ['<Esc>']
+endif
+
 if !exists('g:submode_timeout')
   let g:submode_timeout = &timeout
 endif
@@ -128,7 +132,9 @@ function! s:define_entering_mapping(submode, mode, options, lhs, rhs)  "{{{2
   if !s:mapping_exists_p(s:named_key_enter(a:submode), a:mode)
     " When the given submode is not defined yet - define the default key
     " mappings to leave the submode.
-    call submode#leave_with(a:submode, a:mode, a:options, '<Esc>')
+    for keyseq in g:submode_keyseqs_to_leave
+      call submode#leave_with(a:submode, a:mode, a:options, keyseq)
+    endfor
   endif
 
   execute s:map_command(a:mode, s:filter_flags(a:options, 'r'))

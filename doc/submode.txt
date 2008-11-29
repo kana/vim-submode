@@ -166,7 +166,10 @@ submode#unmap({submode}, {modes}, {options}, {lhs})
 ------------------------------------------------------------------------------
 VARIABLES					*submode-variables*
 
-g:submode_timeout	boolean (default: same as 'timeout')
+g:submode_keyseqs_to_leave	list of strings (default: ['<Esc>'])
+	The default key sequences to leave a submode.
+
+g:submode_timeout		boolean (default: same as 'timeout')
 	If this value is true, time out on submodes is enabled.  Otherwise,
 	time out is disabled.  If time out is enabled, not typing any key in
 	a submode for a long time causes to leave the submode.
@@ -174,7 +177,7 @@ g:submode_timeout	boolean (default: same as 'timeout')
 	If this variable is not defined, the value of 'timeout' is used
 	instead.
 
-g:submode_timeoutlen	number (default: same as 'timeoutlen')
+g:submode_timeoutlen		number (default: same as 'timeoutlen')
 	The time in milliseconds that is waited for typing keys in a submode.
 
 	If this variable is not defined, the value of 'timeoutlen' is used
