@@ -287,6 +287,14 @@ endfunction
 
 
 
+function! s:may_override_showmode_p(mode)  "{{{2
+  " Normal mode / Visual mode (& its variants) / Insert mode (& its variants)
+  return a:mode =~# "^[nvV\<C-v>sS\<C-s>iR]"
+endfunction
+
+
+
+
 function! s:named_key_before_action(submode)  "{{{2
   return printf('<Plug>(submode-before-action:%s)', a:submode)
 endfunction
@@ -345,9 +353,11 @@ endfunction
 
 
 function! s:on_executing_action(submode)  "{{{2
-  " echohl ModeMsg
-  " echo '-- Submode:' a:submode '--'
-  " echohl None
+  if s:original_showmode && s:may_override_showmode_p(mode())
+    echohl ModeMsg
+    echo '-- Submode:' a:submode '--'
+    echohl None
+  endif
   return ''
 endfunction
 
@@ -355,8 +365,10 @@ endfunction
 
 
 function! s:on_leaving_submode(submode)  "{{{2
-  " echo ''
-  " redraw
+  if s:original_showmode && s:may_override_showmode_p(mode())
+    echo ''
+    redraw
+  endif
   call s:restore_options()
   return ''
 endfunction
@@ -373,6 +385,7 @@ endfunction
 
 
 function! s:restore_options()  "{{{2
+  let &showmode = s:original_showmode
   let &timeout = s:original_timeout
   let &timeoutlen = s:original_timeoutlen
   let &ttimeout = s:original_ttimeout
@@ -385,11 +398,13 @@ endfunction
 
 
 function! s:set_up_options()  "{{{2
+  let s:original_showmode = &showmode
   let s:original_timeout = &timeout
   let s:original_timeoutlen = &timeoutlen
   let s:original_ttimeout = &ttimeout
   let s:original_ttimeoutlen = &ttimeoutlen
 
+  set noshowmode
   let &timeout = g:submode_timeout
   let &ttimeout = s:original_timeout ? !0 : s:original_ttimeout
   let &timeoutlen = g:submode_timeoutlen

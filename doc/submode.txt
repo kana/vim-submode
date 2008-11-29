@@ -184,7 +184,8 @@ g:submode_timeoutlen	number (default: same as 'timeoutlen')
 ==============================================================================
 BUGS						*submode-bugs*
 
-- Show a mode indicator like 'showmode'.
+- If 'showmode' is enabled, this plugin shows the current submode like it.
+  But it may cause minor problems on display after leaving a submode.
 
 - Another style to leave a submode like Visual mode: Unbound key sequences are
   just ignored and don't cause to leave a submode.
