@@ -73,6 +73,17 @@ endif
 
 
 
+"" See s:set_up_options() and s:restore_options().
+"
+" let s:original_showmode = &showmode
+" let s:original_timeout = &timeout
+" let s:original_timeoutlen = &timeoutlen
+" let s:original_ttimeout = &ttimeout
+" let s:original_ttimeoutlen = &ttimeoutlen
+
+
+
+
 
 
 
