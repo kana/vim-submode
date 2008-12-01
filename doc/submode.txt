@@ -207,9 +207,6 @@ g:submode_timeoutlen		number (default: same as 'timeoutlen')
 ==============================================================================
 BUGS						*submode-bugs*
 
-- If 'showmode' is enabled, this plugin shows the current submode like it.
-  But it may cause minor problems on display after leaving a submode.
-
 - Unmap mappings for a submode properly.  The current inplementation just
   replaces rhs with <Nop>, but it may cause some problems.
 

@@ -283,6 +283,13 @@ endfunction
 
 
 
+function! s:insert_mode_p(mode)  "{{{2
+  return a:mode =~# '^[iR]'
+endfunction
+
+
+
+
 function! s:longer_mapping_exists_p(submode, lhs)  "{{{2
   " FIXME: Implement the proper calculation.
   "        Note that mapcheck() can't be used for this purpose because it may
@@ -326,7 +333,7 @@ endfunction
 
 function! s:may_override_showmode_p(mode)  "{{{2
   " Normal mode / Visual mode (& its variants) / Insert mode (& its variants)
-  return a:mode =~# "^[nvV\<C-v>sS\<C-s>iR]"
+  return a:mode =~# "^[nvV\<C-v>sS\<C-s>]" || s:insert_mode_p(a:mode)
 endfunction
 
 
@@ -403,8 +410,16 @@ endfunction
 
 function! s:on_leaving_submode(submode)  "{{{2
   if s:original_showmode && s:may_override_showmode_p(mode())
-    echo ''
-    redraw
+    if s:insert_mode_p(mode())
+      let cussor_position = getpos('.')
+    endif
+
+      " BUGS: :redraw! doesn't redraw 'showmode'.
+    execute "normal! \<C-l>"
+
+    if s:insert_mode_p(mode())
+      call setpos('.', cussor_position)
+    endif
   endif
   if getchar(1) isnot 0
     " To completely ignore unbound key sequences in a submode,
