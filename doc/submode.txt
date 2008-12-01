@@ -77,6 +77,15 @@ Requirements:
 INTERFACE					*submode-interface*
 
 ------------------------------------------------------------------------------
+COMMANDS					*submode-commands*
+
+:SubmodeRestoreOptions				*:SubmodeRestoreOptions*
+			Ex command version of |submode#restore_options()|.
+
+
+
+
+------------------------------------------------------------------------------
 FUNCTIONS					*submode-functions*
 
 						*submode#enter_with()*
@@ -153,6 +162,15 @@ submode#map({submode}, {modes}, {options}, {lhs}, {rhs})
 				A key sequence to be executed by typing {lhs}.
 
 				See also {lhs} for other notes.
+
+submode#restore_options()			*submode#restore_options()*
+			Restore options overriden by this plugin.
+
+			This plugin overrides some options before entering
+			a submode and restores the options after leaving
+			a submode.  <C-c> can be used to leave a submode, but
+			it disturbs to restore the options.  Call this
+			function if you do so.
 
 						*submode#unmap()*
 submode#unmap({submode}, {modes}, {options}, {lhs})

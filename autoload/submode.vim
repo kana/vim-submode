@@ -81,6 +81,10 @@ endif
 " let s:original_ttimeout = &ttimeout
 " let s:original_ttimeoutlen = &ttimeoutlen
 
+if !exists('s:options_overridden_p')
+  let s:options_overridden_p = 0
+endif
+
 
 
 
@@ -89,6 +93,13 @@ endif
 
 
 " Interface  "{{{1
+" :SubmodeRestoreOptions  "{{{2
+
+command! -bar -nargs=0 SubmodeRestoreOptions  call submode#restore_options()
+
+
+
+
 function! submode#enter_with(submode, modes, options, lhs, ...)  "{{{2
   let rhs = 0 < a:0 ? a:1 : '<Nop>'
   for mode in s:each_char(a:modes)
@@ -111,6 +122,14 @@ function! submode#map(submode, modes, options, lhs, rhs)  "{{{2
   for mode in s:each_char(a:modes)
     call s:define_submode_mapping(a:submode, mode, a:options, a:lhs, a:rhs)
   endfor
+  return
+endfunction
+
+
+
+
+function! submode#restore_options()  "{{{2
+  call s:restore_options()
   return
 endfunction
 
@@ -408,6 +427,11 @@ endfunction
 
 
 function! s:restore_options()  "{{{2
+  if !s:options_overridden_p
+    return
+  endif
+  let s:options_overridden_p = 0
+
   let &showmode = s:original_showmode
   let &timeout = s:original_timeout
   let &timeoutlen = s:original_timeoutlen
@@ -421,6 +445,11 @@ endfunction
 
 
 function! s:set_up_options()  "{{{2
+  if s:options_overridden_p
+    return
+  endif
+  let s:options_overridden_p = !0
+
   let s:original_showmode = &showmode
   let s:original_timeout = &timeout
   let s:original_timeoutlen = &timeoutlen
