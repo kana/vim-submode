@@ -207,14 +207,24 @@ g:submode_timeoutlen		number (default: same as 'timeoutlen')
 ==============================================================================
 BUGS						*submode-bugs*
 
+LIMITATIONS ~
+
+- In {rhs} of a key mapping for a submode, <SID> cannot be used.  Because key
+  mappings for a submode is defined by this plugin, not callers.
+
+- To behave the same as Normal mode and Visual mode, any unbound key sequence
+  should be ignored in a submode, but it's impossible to implement.
+
+
+PROBLEMS ~
+
+- Missing [count] support in a submode.
+
 - Unmap mappings for a submode properly.  The current inplementation just
   replaces rhs with <Nop>, but it may cause some problems.
 
 - Add commands like |:map| and others to deal with submode mappings for
   readability.
-
-- To behave the same as Normal mode and Visual mode, any unbound key sequence
-  should be ignored in a submode, but it's impossible to implement.
 
 - There are many bugs around the world.
 
