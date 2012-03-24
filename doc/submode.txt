@@ -1,6 +1,6 @@
 *submode.txt*	Create your own submodes
 
-Version 0.0.0
+Version 0.0.1
 Script ID: 2467
 Copyright (C) 2008 kana <http://whileimautomaton.net/>
 License: MIT license  {{{
@@ -240,6 +240,10 @@ PROBLEMS ~
 
 ==============================================================================
 CHANGELOG					*submode-changelog*
+
+0.0.1	2012-03-24T14:32:30+09:00		*submode-changelog-0.0.1*
+	- Refine the document a bit.
+	- Refine the internal structure a bit.
 
 0.0.0	2008-11-27T01:58:43+09:00		*submode-changelog-0.0.0*
 	- Initial version.
