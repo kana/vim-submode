@@ -64,6 +64,7 @@ By default, <Esc> is automatically defined as a key to leave any submode.
 So you don't have to explicitly define like the above example.
 There are also 2 ways to leave submodes:
 - Type any key sequence which is not mapped in the submode.
+  See also |g:submode_keep_leaving_key|.
 - Don't type any key for a long time.  See |submode-variables| to configure
   the details of this time out.
 
@@ -190,6 +191,19 @@ submode#unmap({submode}, {modes}, {options}, {lhs})
 
 ------------------------------------------------------------------------------
 VARIABLES					*submode-variables*
+
+						*g:submode_keep_leaving_key*
+g:submode_keep_leaving_key	boolean (default: false)
+	Whenever you type any key which is not mapped in the current submode,
+	it causes to leave from the submode.  In this case, the key is
+	consumed by default.  If this variable is set to true, the key is not
+	consumed and will be processed by Vim.
+
+	For example, when you type an unmapped key "X" to leave from the
+	current submode of Normal mode, the "X" will be consumed by default.
+	If this variable is set to true, the "X" will be processed by Vim, so
+	that a characer before the cursor will be deleted unless you map |X|
+	to something.
 
 						*g:submode_keyseqs_to_leave*
 g:submode_keyseqs_to_leave	list of strings (default: ['<Esc>'])

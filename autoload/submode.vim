@@ -58,6 +58,10 @@
 
 " Variables  "{{{1
 
+if !exists('g:submode_keep_leaving_key')
+  let g:submode_keep_leaving_key = 0
+endif
+
 if !exists('g:submode_keyseqs_to_leave')
   let g:submode_keyseqs_to_leave = ['<Esc>']
 endif
@@ -421,7 +425,7 @@ function! s:on_leaving_submode(submode)  "{{{2
       call setpos('.', cussor_position)
     endif
   endif
-  if getchar(1) isnot 0
+  if !g:submode_keep_leaving_key && getchar(1) isnot 0
     " To completely ignore unbound key sequences in a submode,
     " here we have to fetch and drop the last key in the key sequence.
     call getchar()
