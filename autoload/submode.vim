@@ -26,6 +26,17 @@
 " In the following pseudo code, :MAP means :map or :noremap, and it depends on
 " user's specification.
 "
+" {lhs} is limited to 50 characters.
+" So, uses the following abbreviation in fact.
+" before-action   -> ba
+" before-entering -> be
+" enter           -> e
+" leave           -> l
+" prefix          -> p
+" rhs             -> r
+" with            -> (omit)
+" for             -> (omit)
+"
 " map {key-to-enter}
 " \   <Plug>(submode-before-entering:{submode}:with:{key-to-enter})
 "    \<Plug>(submode-before-entering:{submode})
@@ -340,49 +351,49 @@ endfunction
 
 
 function! s:named_key_before_action(submode)  "{{{2
-  return printf('<Plug>(submode-before-action:%s)', a:submode)
+  return printf('<Plug>(submode-ba:%s)', a:submode)
 endfunction
 
 
 
 
 function! s:named_key_before_entering(submode)  "{{{2
-  return printf('<Plug>(submode-before-entering:%s)', a:submode)
+  return printf('<Plug>(submode-be:%s)', a:submode)
 endfunction
 
 
 
 
 function! s:named_key_before_entering_with(submode, lhs)  "{{{2
-  return printf('<Plug>(submode-before-entering:%s:with:%s)', a:submode, a:lhs)
+  return printf('<Plug>(submode-be:%s:%s)', a:submode, a:lhs)
 endfunction
 
 
 
 
 function! s:named_key_enter(submode)  "{{{2
-  return printf('<Plug>(submode-enter:%s)', a:submode)
+  return printf('<Plug>(submode-e:%s)', a:submode)
 endfunction
 
 
 
 
 function! s:named_key_leave(submode)  "{{{2
-  return printf('<Plug>(submode-leave:%s)', a:submode)
+  return printf('<Plug>(submode-l:%s)', a:submode)
 endfunction
 
 
 
 
 function! s:named_key_prefix(submode)  "{{{2
-  return printf('<Plug>(submode-prefix:%s)', a:submode)
+  return printf('<Plug>(submode-p:%s)', a:submode)
 endfunction
 
 
 
 
 function! s:named_key_rhs(submode, lhs)  "{{{2
-  return printf('<Plug>(submode-rhs:%s:for:%s)', a:submode, a:lhs)
+  return printf('<Plug>(submode-r:%s:%s)', a:submode, a:lhs)
 endfunction
 
 
