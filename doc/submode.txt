@@ -195,6 +195,11 @@ VARIABLES					*submode-variables*
 g:submode_keyseqs_to_leave	list of strings (default: ['<Esc>'])
 	The default key sequences to leave a submode.
 
+						*g:submode_leave_with_key*
+g:submode_leave_with_key	boolean (default: false)
+	If this value is true, when you leave a submode by any key which is
+	not mapped, the key is inputted.  Otherwise, the key is ignored.
+
 						*g:submode_timeout*
 g:submode_timeout		boolean (default: same as 'timeout')
 	If this value is true, time out on submodes is enabled.  Otherwise,
