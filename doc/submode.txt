@@ -72,10 +72,10 @@ Requirements:
 - Vim 7.2 or later
 
 Latest version:
-http://github.com/kana/config/commits/vim-submode
+http://github.com/kana/vim-submode
 
 Document in HTML format:
-http://kana.github.com/config/vim/submode.html
+http://vim-doc.heroku.com/view?https://raw.github.com/kana/vim-submode/master/doc/submode.txt
 
 
 
