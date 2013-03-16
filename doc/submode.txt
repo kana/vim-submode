@@ -1,8 +1,8 @@
 *submode.txt*	Create your own submodes
 
-Version 0.0.1
+Version 0.1.0
 Script ID: 2467
-Copyright (C) 2008 kana <http://whileimautomaton.net/>
+Copyright (C) 2008-2013 kana <http://whileimautomaton.net/>
 License: MIT license  {{{
     Permission is hereby granted, free of charge, to any person obtaining
     a copy of this software and associated documentation files (the
@@ -54,7 +54,7 @@ following settings:
 The above settings mean:
 - Define a new submode named "undo/redo".
 - Define "g-" and "g+" as key sequences to enter the submode "undo/redo" from
-  Normal mode.  Aditionally, they does undo/redo before entering the submode
+  Normal mode.  Additionally, they does undo/redo before entering the submode
   "undo/redo".
 - In the submode "undo/redo", "-" and "+" do undo/redo.
 - In the submode "undo/redo", "<Esc>" leaves the submode.
@@ -65,8 +65,8 @@ So you don't have to explicitly define like the above example.
 There are also 2 ways to leave submodes:
 - Type any key sequence which is not mapped in the submode.
   See also |g:submode_keep_leaving_key|.
-- Don't type any key for a long time.  See |submode-variables| to configure
-  the details of this time out.
+- Don't type any key for a long time.
+  See |submode-variables| to configure the details of this time out.
 
 
 Requirements:
@@ -257,6 +257,11 @@ PROBLEMS ~
 
 ==============================================================================
 CHANGELOG					*submode-changelog*
+
+0.1.0	2013-03-16T16:34:49+09:00		*submode-changelog-0.1.0*
+	- Allow to keep a key to leave from the current mode.
+	  See also |g:submode_keep_leaving_key| for the details.
+	- Improve the document a bit.
 
 0.0.1	2012-03-24T14:32:30+09:00		*submode-changelog-0.0.1*
 	- Refine the document a bit.
