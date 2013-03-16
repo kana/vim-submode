@@ -72,10 +72,10 @@ Requirements:
 - Vim 7.2 or later
 
 Latest version:
-http://github.com/kana/config/commits/vim-submode
+https://github.com/kana/vim-submode
 
 Document in HTML format:
-http://kana.github.com/config/vim/submode.html
+http://vim-doc.heroku.com/view?https://raw.github.com/kana/vim-submode/master/doc/submode.txt
 
 
 
@@ -191,9 +191,11 @@ submode#unmap({submode}, {modes}, {options}, {lhs})
 ------------------------------------------------------------------------------
 VARIABLES					*submode-variables*
 
+						*g:submode_keyseqs_to_leave*
 g:submode_keyseqs_to_leave	list of strings (default: ['<Esc>'])
 	The default key sequences to leave a submode.
 
+						*g:submode_timeout*
 g:submode_timeout		boolean (default: same as 'timeout')
 	If this value is true, time out on submodes is enabled.  Otherwise,
 	time out is disabled.  If time out is enabled, not typing any key in
@@ -202,6 +204,7 @@ g:submode_timeout		boolean (default: same as 'timeout')
 	If this variable is not defined, the value of 'timeout' is used
 	instead.
 
+						*g:submode_timeoutlen*
 g:submode_timeoutlen		number (default: same as 'timeoutlen')
 	The time in milliseconds that is waited for typing keys in a submode.
 
