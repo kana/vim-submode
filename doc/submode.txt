@@ -65,8 +65,8 @@ So you don't have to explicitly define like the above example.
 There are also 2 ways to leave submodes:
 - Type any key sequence which is not mapped in the submode.
   See also |g:submode_keep_leaving_key|.
-- Don't type any key for a long time.  See |submode-variables| to configure
-  the details of this time out.
+- Don't type any key for a long time.
+  See |submode-variables| to configure the details of this time out.
 
 
 Requirements:
