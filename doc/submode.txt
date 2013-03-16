@@ -54,7 +54,7 @@ following settings:
 The above settings mean:
 - Define a new submode named "undo/redo".
 - Define "g-" and "g+" as key sequences to enter the submode "undo/redo" from
-  Normal mode.  Aditionally, they does undo/redo before entering the submode
+  Normal mode.  Additionally, they does undo/redo before entering the submode
   "undo/redo".
 - In the submode "undo/redo", "-" and "+" do undo/redo.
 - In the submode "undo/redo", "<Esc>" leaves the submode.
