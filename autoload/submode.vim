@@ -74,6 +74,10 @@ if !exists('g:submode_timeoutlen')
   let g:submode_timeoutlen = &timeoutlen
 endif
 
+if !exists('g:submode_always_show_submode')
+  let g:submode_always_show_submode = 0
+endif
+
 
 
 
@@ -401,7 +405,7 @@ endfunction
 
 
 function! s:on_executing_action(submode)  "{{{2
-  if s:original_showmode && s:may_override_showmode_p(mode())
+  if (s:original_showmode || g:submode_always_show_submode) && s:may_override_showmode_p(mode())
     echohl ModeMsg
     echo '-- Submode:' a:submode '--'
     echohl None
@@ -413,7 +417,7 @@ endfunction
 
 
 function! s:on_leaving_submode(submode)  "{{{2
-  if s:original_showmode && s:may_override_showmode_p(mode())
+  if (s:original_showmode || g:submode_always_show_submode) && s:may_override_showmode_p(mode())
     if s:insert_mode_p(mode())
       let cussor_position = getpos('.')
     endif
