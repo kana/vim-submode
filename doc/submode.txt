@@ -225,6 +225,10 @@ g:submode_timeoutlen		number (default: same as 'timeoutlen')
 	If this variable is not defined, the value of 'timeoutlen' is used
 	instead.
 
+						*g:submode_always_show_submode*
+g:submode_always_show_submode		boolean (default: false)
+	Show always the submode you're in, even if 'noshowmode' is set.
+
 
 
 
