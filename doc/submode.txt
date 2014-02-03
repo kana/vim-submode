@@ -225,7 +225,13 @@ g:submode_timeoutlen		number (default: same as 'timeoutlen')
 	If this variable is not defined, the value of 'timeoutlen' is used
 	instead.
 
-
+						*g:submode_showmode*
+g:submode_showmode		boolean (default: same as 'showmode')
+	If true, a message with the active submode's name will be displayed
+	on the last line.
+	
+	If this variable is not defined, the value of 'showmode' is used
+	instead.
 
 
 ==============================================================================
