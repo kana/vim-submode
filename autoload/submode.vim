@@ -1,6 +1,6 @@
 " submode - Create your own submodes
 " Version: 0.2.0
-" Copyright (C) 2008-2013 kana <http://whileimautomaton.net/>
+" Copyright (C) 2008-2014 kana <http://whileimautomaton.net/>
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
