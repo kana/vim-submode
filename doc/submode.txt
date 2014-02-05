@@ -124,6 +124,9 @@ submode#map({submode}, {modes}, {options}, {lhs}, {rhs})
 				Digits		0-9
 				Some symbols	-, _, /
 
+				Note that the submode name is used as parts of
+				internal key mappings.  Use a short name.
+
 			{modes}		String
 				A sequence of letters which specifies the
 				modes to define a key mapping.  The meanings
@@ -243,6 +246,11 @@ g:submode_timeoutlen		number (default: same as 'timeoutlen')
 BUGS						*submode-bugs*
 
 LIMITATIONS ~
+
+- The maximum length of {lhs} of normal key mappings is 50.  Since submode key
+  mappings are built on top of normal key mappings, the maximum length of
+  a submode {lhs} is shorter than 50.  Usually 10 or more characters are
+  available, depending on a submode name.
 
 - In {rhs} of a key mapping for a submode, <SID> cannot be used.  Because key
   mappings for a submode is defined by this plugin, not callers.
