@@ -1,8 +1,8 @@
 *submode.txt*	Create your own submodes
 
-Version 0.1.0
+Version 0.2.0
 Script ID: 2467
-Copyright (C) 2008-2013 kana <http://whileimautomaton.net/>
+Copyright (C) 2008-2014 kana <http://whileimautomaton.net/>
 License: MIT license  {{{
     Permission is hereby granted, free of charge, to any person obtaining
     a copy of this software and associated documentation files (the
@@ -282,6 +282,14 @@ PROBLEMS ~
 
 ==============================================================================
 CHANGELOG					*submode-changelog*
+
+0.2.0	2014-02-05T23:56:14+09:00		*submode-changelog-0.2.0*
+	- Add |g:submode_always_show_submode| for users preferring
+	  'statusline' such as vim-airline and vim-powerline.
+	- Fix a rendering problem on the cursor.  The problem was happened if
+	  'showcmd' is off and 'showmode' is on.
+	- Fix not to show internal key mappings in 'showcmd' area.
+	- Add a note about a limitation of {lhs} length.  See |submode-bugs|.
 
 0.1.0	2013-03-16T16:34:49+09:00		*submode-changelog-0.1.0*
 	- Allow to keep a key to leave from the current mode.
