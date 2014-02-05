@@ -192,6 +192,17 @@ submode#unmap({submode}, {modes}, {options}, {lhs})
 ------------------------------------------------------------------------------
 VARIABLES					*submode-variables*
 
+					       *g:submode_always_show_submode*
+g:submode_always_show_submode	boolean (default: false)
+	Show always the current submode, even if 'showmode' is disabled.
+	Use this option if you use vim-airline or vim-powerline.
+
+	'showmode'  g:submode_always_show_submode  the current submode ~
+	off         off                            not shown
+	on          off                            shown
+	off         on                             shown
+	on          on                             shown
+
 						*g:submode_keep_leaving_key*
 g:submode_keep_leaving_key	boolean (default: false)
 	Whenever you type any key which is not mapped in the current submode,
