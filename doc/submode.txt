@@ -239,6 +239,12 @@ LIMITATIONS ~
 - To behave the same as Normal mode and Visual mode, any unbound key sequence
   should be ignored in a submode, but it's impossible to implement.
 
+- 'showcmd' is always turned on a submode to render the cursor properly.
+
+- If 'showcmd' is turned on and 'encoding' is set to a non-Unicode encoding,
+  ".........." is showed at the bottom right corner while a submode is active.
+  This is to hide a part of internal key mappings for submode key mappings.
+
 
 PROBLEMS ~
 

@@ -79,6 +79,7 @@ endif
 
 "" See s:set_up_options() and s:restore_options().
 "
+" let s:original_showcmd = &showcmd
 " let s:original_showmode = &showmode
 " let s:original_timeout = &timeout
 " let s:original_timeoutlen = &timeoutlen
@@ -88,6 +89,19 @@ endif
 if !exists('s:options_overridden_p')
   let s:options_overridden_p = 0
 endif
+
+" A padding string to wipe out internal key mappings in 'showcmd' area.  (gh-3)
+"
+" We use no-break spaces (U+00A0) or dots, depending of the current 'encoding'.
+" Because
+"
+" * A normal space (U+0020) is rendered as "<20>" since Vim 7.4.116.
+" * U+00A0 is rendered as an invisible glyph if 'encoding' is set to one of
+"   Unicode encodings.  Otherwise "| " is rendered instead.
+let s:STEALTH_TYPEAHEAD =
+\ &g:encoding =~# '^u'
+\ ? repeat("\<Char-0xa0>", 5)
+\ : repeat('.', 10)
 
 
 
@@ -379,7 +393,7 @@ endfunction
 
 
 function! s:named_key_prefix(submode)  "{{{2
-  return printf('<Plug>(submode-prefix:%s)', a:submode)
+  return printf('<Plug>(submode-prefix:%s)%s', a:submode, s:STEALTH_TYPEAHEAD)
 endfunction
 
 
@@ -451,6 +465,7 @@ function! s:restore_options()  "{{{2
   endif
   let s:options_overridden_p = 0
 
+  let &showcmd = s:original_showcmd
   let &showmode = s:original_showmode
   let &timeout = s:original_timeout
   let &timeoutlen = s:original_timeoutlen
@@ -469,12 +484,18 @@ function! s:set_up_options()  "{{{2
   endif
   let s:options_overridden_p = !0
 
+  let s:original_showcmd = &showcmd
   let s:original_showmode = &showmode
   let s:original_timeout = &timeout
   let s:original_timeoutlen = &timeoutlen
   let s:original_ttimeout = &ttimeout
   let s:original_ttimeoutlen = &ttimeoutlen
 
+  " NB: 'showcmd' must be enabled to render the cursor properly.
+  " If 'showcmd' is disabled and the current submode message is rendered, the
+  " cursor is rendered at the end of the message, not the actual position in
+  " the current window.  (gh-9)
+  set showcmd
   set noshowmode
   let &timeout = g:submode_timeout
   let &ttimeout = s:original_timeout ? !0 : s:original_ttimeout
