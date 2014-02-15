@@ -223,7 +223,7 @@ function! s:define_entering_mapping(submode, mode, options, lhs, rhs)  "{{{2
   " NB: :map-<expr> cannot be used for s:on_leaving_submode(),
   "     because it uses some commands not allowed in :map-<expr>.
   execute s:map_command(a:mode, '')
-  \       s:map_options('')
+  \       s:map_options('s')
   \       s:named_key_leave(a:submode)
   \       printf('%s<SID>on_leaving_submode(%s)<Return>',
   \              a:mode =~# '[ic]' ? '<C-r>=' : '@=',
