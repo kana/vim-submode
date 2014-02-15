@@ -1,6 +1,6 @@
 *submode.txt*	Create your own submodes
 
-Version 0.2.0
+Version 0.3.0
 Script ID: 2467
 Copyright (C) 2008-2014 kana <http://whileimautomaton.net/>
 License: MIT license  {{{
@@ -256,7 +256,8 @@ LIMITATIONS ~
 - The maximum length of {lhs} of normal key mappings is 50.  Since submode key
   mappings are built on top of normal key mappings, the maximum length of
   a submode {lhs} is shorter than 50.  Usually 10 or more characters are
-  available, depending on a submode name.
+  available, depending on a submode name.  And it is enough length because you
+  don't want to type 4 or more keys to execute a command.
 
 - In {rhs} of a key mapping for a submode, <SID> cannot be used.  Because key
   mappings for a submode is defined by this plugin, not callers.
@@ -273,21 +274,23 @@ LIMITATIONS ~
 
 PROBLEMS ~
 
-- Missing [count] support in a submode.
+- [count] is not supported in a submode.
 
-- Unmap mappings for a submode properly.  The current inplementation just
-  replaces rhs with <Nop>, but it may cause some problems.
+- |submode#unmap()| does not actually unmap key mappings.  It just replaces
+  rhs with <Nop>, but it may cause some problems.
 
-- Add commands like |:map| and others to deal with submode mappings for
-  readability.
-
-- There are many bugs around the world.
+- The current API to define submode key mappings is somewhat low-level.
+  It might be useful to add |:map|-like commands for readability.
 
 
 
 
 ==============================================================================
 CHANGELOG					*submode-changelog*
+
+0.3.0	2014-02-15T21:15:46+09:00		*submode-changelog-0.3.0*
+	- Add |submode#current()|.
+	- Tidy up the document a bit.
 
 0.2.0	2014-02-05T23:56:14+09:00		*submode-changelog-0.2.0*
 	- Add |g:submode_always_show_submode| for users preferring
