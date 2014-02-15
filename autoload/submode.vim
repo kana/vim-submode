@@ -411,6 +411,7 @@ endfunction
 
 
 function! s:on_entering_submode(submode)  "{{{2
+  let g:submode_active_submode = a:submode
   call s:set_up_options()
   return ''
 endfunction
@@ -451,6 +452,7 @@ function! s:on_leaving_submode(submode)  "{{{2
     call getchar()
   endif
   call s:restore_options()
+  let g:submode_active_submode = ''
   return ''
 endfunction
 
