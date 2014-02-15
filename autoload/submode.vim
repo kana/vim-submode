@@ -107,6 +107,8 @@ let s:STEALTH_TYPEAHEAD =
 \ ? repeat("\<Char-0xa0>", 5)
 \ : repeat('.', 10)
 
+let s:current_submode = ''
+
 
 
 
@@ -118,6 +120,13 @@ let s:STEALTH_TYPEAHEAD =
 " :SubmodeRestoreOptions  "{{{2
 
 command! -bar -nargs=0 SubmodeRestoreOptions  call submode#restore_options()
+
+
+
+
+function! submode#current()  "{{{2
+  return s:current_submode
+endfunction
 
 
 
@@ -411,7 +420,7 @@ endfunction
 
 
 function! s:on_entering_submode(submode)  "{{{2
-  call s:set_up_options()
+  call s:set_up_options(a:submode)
   return ''
 endfunction
 
@@ -478,13 +487,15 @@ function! s:restore_options()  "{{{2
   let &ttimeout = s:original_ttimeout
   let &ttimeoutlen = s:original_ttimeoutlen
 
+  let s:current_submode = ''
+
   return
 endfunction
 
 
 
 
-function! s:set_up_options()  "{{{2
+function! s:set_up_options(submode)  "{{{2
   if s:options_overridden_p
     return
   endif
@@ -509,6 +520,8 @@ function! s:set_up_options()  "{{{2
   let &ttimeoutlen = s:original_ttimeoutlen < 0
   \                  ? s:original_timeoutlen
   \                  : s:original_ttimeoutlen
+
+  let s:current_submode = a:submode
 
   return
 endfunction
