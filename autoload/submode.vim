@@ -221,7 +221,7 @@ function! s:define_entering_mapping(submode, mode, options, lhs, rhs)  "{{{2
   \       s:named_key_prefix(a:submode)
   \       s:named_key_leave(a:submode)
   execute s:map_command(a:mode, '')
-  \       s:map_options('')
+  \       s:map_options('s')
   \       s:named_key_leave(a:submode)
   \       printf('%s<SID>on_leaving_submode(%s)<Return>',
   \              a:mode =~# '[ic]' ? '<C-r>=' : '@=',
