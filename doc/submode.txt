@@ -288,6 +288,10 @@ PROBLEMS ~
 ==============================================================================
 CHANGELOG					*submode-changelog*
 
+0.3.0	2014-02-15T21:15:46+09:00		*submode-changelog-0.3.0*
+	- Add |submode#current()|.
+	- Tidy up the document a bit.
+
 0.2.0	2014-02-05T23:56:14+09:00		*submode-changelog-0.2.0*
 	- Add |g:submode_always_show_submode| for users preferring
 	  'statusline' such as vim-airline and vim-powerline.
