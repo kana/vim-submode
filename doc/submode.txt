@@ -96,6 +96,11 @@ COMMANDS					*submode-commands*
 ------------------------------------------------------------------------------
 FUNCTIONS					*submode-functions*
 
+						*submode#active_submode()*
+submode#active_submode()
+		        Returns the name of the currently active submode
+                        or '' if no submode is running.
+
 						*submode#enter_with()*
 submode#enter_with({submode}, {modes}, {options}, {lhs}, [{rhs}])
 			Define a key mapping to enter the {submode} from
