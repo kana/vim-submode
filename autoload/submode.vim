@@ -220,6 +220,8 @@ function! s:define_entering_mapping(submode, mode, options, lhs, rhs)  "{{{2
   \       s:map_options('')
   \       s:named_key_prefix(a:submode)
   \       s:named_key_leave(a:submode)
+  " NB: :map-<expr> cannot be used for s:on_leaving_submode(),
+  "     because it uses some commands not allowed in :map-<expr>.
   execute s:map_command(a:mode, '')
   \       s:map_options('')
   \       s:named_key_leave(a:submode)
