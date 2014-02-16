@@ -288,6 +288,10 @@ PROBLEMS ~
 ==============================================================================
 CHANGELOG					*submode-changelog*
 
+0.3.1	2014-02-16T18:59:21+09:00		*submode-changelog-0.3.1*
+	- Fix to hide unintended messages which were shown in the command line
+	  whenever users leave from a submode.
+
 0.3.0	2014-02-15T21:15:46+09:00		*submode-changelog-0.3.0*
 	- Add |submode#current()|.
 	- Tidy up the document a bit.
