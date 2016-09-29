@@ -424,6 +424,8 @@ endfunction
 
 function! s:on_entering_submode(submode)  "{{{2
   call s:set_up_options(a:submode)
+  let s:submode_undo_changenr = changenr()
+  let s:has_changes = 1
   return ''
 endfunction
 
@@ -541,6 +543,29 @@ endfunction
 
 
 
+
+" Utility  "{{{1
+function! UndoLastSubmodeActions()
+  " Undo until submode's first modification
+  if s:has_changes
+    execute ':undo ' s:submode_undo_changenr
+    " Undo one more time through main undo branch
+    execute 'normal! u'
+    let s:submode_redo_changenr = changenr()
+    let s:has_changes = 0
+  endif
+endfunction
+
+
+
+
+function! RedoLastSubmodeActions()
+  " Undo until submode's first modification
+  if !s:has_changes
+    execute ':undo ' s:submode_redo_changenr
+    let s:has_changes = 1
+  endif
+endfunction
 
 
 
