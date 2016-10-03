@@ -555,29 +555,29 @@ endfunction
 
 " Utility  "{{{1
 function! s:UndoLastSubmodeActions()  "{{{2
-    if s:has_changes
-        " Current undo tree position for future possible redo action
-        let s:submode_redo_changenr = changenr()
-        " Undo until submode's first modification
-        execute ':undo ' s:submode_undo_changenr
-        " Undo one more time through main undo branch
-        execute 'normal! u'
-        let s:has_changes = 0
-        " To prevent calling the Redo function before calling Undo for
-        " any new submode entry
-        let s:is_redo_allowed = 1
-    endif
+  if s:has_changes
+    " Current undo tree position for future possible redo action
+    let s:submode_redo_changenr = changenr()
+    " Undo until submode's first modification
+    execute ':undo ' s:submode_undo_changenr
+    " Undo one more time through main undo branch
+    execute 'normal! u'
+    let s:has_changes = 0
+    " To prevent calling the Redo function before calling Undo for
+    " any new submode entry
+    let s:is_redo_allowed = 1
+  endif
 endfunction
 
 
 
 
 function! s:RedoLastSubmodeActions()  "{{{2
-    " Undo until submode's first modification
-    if s:is_redo_allowed
-        execute ':undo ' s:submode_redo_changenr
-        let s:has_changes = 1
-    endif
+  " Undo until submode's first modification
+  if s:is_redo_allowed
+    execute ':undo ' s:submode_redo_changenr
+    let s:has_changes = 1
+  endif
 endfunction
 
 
