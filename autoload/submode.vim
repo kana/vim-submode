@@ -108,6 +108,8 @@ let s:STEALTH_TYPEAHEAD =
 \ : repeat('.', 10)
 
 let s:current_submode = ''
+let s:has_changes = 0
+let s:is_redo_allowed = 0
 
 
 
@@ -426,6 +428,7 @@ function! s:on_entering_submode(submode)  "{{{2
   call s:set_up_options(a:submode)
   let s:submode_undo_changenr = changenr()
   let s:has_changes = 1
+  let s:is_redo_allowed = 0
   return ''
 endfunction
 
@@ -545,27 +548,37 @@ endfunction
 
 
 " Utility  "{{{1
-function! UndoLastSubmodeActions()
-  " Undo until submode's first modification
-  if s:has_changes
-    execute ':undo ' s:submode_undo_changenr
-    " Undo one more time through main undo branch
-    execute 'normal! u'
-    let s:submode_redo_changenr = changenr()
-    let s:has_changes = 0
-  endif
+function! s:UndoLastSubmodeActions()
+    if s:has_changes
+        " Current undo tree position for future possible redo action
+        let s:submode_redo_changenr = changenr()
+        " Undo until submode's first modification
+        execute ':undo ' s:submode_undo_changenr
+        " Undo one more time through main undo branch
+        execute 'normal! u'
+        let s:has_changes = 0
+        " To prevent calling the Redo function before calling Undo for
+        " any new submode entry
+        let s:is_redo_allowed = 1
+    endif
 endfunction
 
 
 
 
-function! RedoLastSubmodeActions()
-  " Undo until submode's first modification
-  if !s:has_changes
-    execute ':undo ' s:submode_redo_changenr
-    let s:has_changes = 1
-  endif
+function! s:RedoLastSubmodeActions()
+    " Undo until submode's first modification
+    if s:is_redo_allowed
+        execute ':undo ' s:submode_redo_changenr
+        let s:has_changes = 1
+    endif
 endfunction
+
+
+
+
+command! -range=% SubmodeUndo call <SID>UndoLastSubmodeActions()
+command! -range=% SubmodeRedo call <SID>RedoLastSubmodeActions()
 
 
 
