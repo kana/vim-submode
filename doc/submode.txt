@@ -90,8 +90,11 @@ COMMANDS					*submode-commands*
 :SubmodeRestoreOptions				*:SubmodeRestoreOptions*
 			Ex command version of |submode#restore_options()|.
 
+:SubmodeUndo				*:SubmodeUndo*
+			Undo all modifications made in last submode execution.
 
-
+:SubmodeRedo				*:SubmodeRedo*
+			Redo all modifications made in last submode execution.
 
 ------------------------------------------------------------------------------
 FUNCTIONS					*submode-functions*

@@ -123,7 +123,13 @@ let s:is_redo_allowed = 0
 
 command! -bar -nargs=0 SubmodeRestoreOptions  call submode#restore_options()
 
+" :SubmodeUndo  "{{{2
 
+command! SubmodeUndo call <SID>UndoLastSubmodeActions()
+
+" :SubmodeRedo  "{{{2
+
+command! SubmodeRedo call <SID>RedoLastSubmodeActions()
 
 
 function! submode#current()  "{{{2
@@ -548,7 +554,7 @@ endfunction
 
 
 " Utility  "{{{1
-function! s:UndoLastSubmodeActions()
+function! s:UndoLastSubmodeActions()  "{{{2
     if s:has_changes
         " Current undo tree position for future possible redo action
         let s:submode_redo_changenr = changenr()
@@ -566,19 +572,13 @@ endfunction
 
 
 
-function! s:RedoLastSubmodeActions()
+function! s:RedoLastSubmodeActions()  "{{{2
     " Undo until submode's first modification
     if s:is_redo_allowed
         execute ':undo ' s:submode_redo_changenr
         let s:has_changes = 1
     endif
 endfunction
-
-
-
-
-command! -range=% SubmodeUndo call <SID>UndoLastSubmodeActions()
-command! -range=% SubmodeRedo call <SID>RedoLastSubmodeActions()
 
 
 
