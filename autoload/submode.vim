@@ -436,8 +436,9 @@ function! s:on_executing_action(submode)  "{{{2
     echohl ModeMsg
     echo '-- Submode:' a:submode '--'
     echohl None
+  else
+    return ''
   endif
-  return ''
 endfunction
 
 
