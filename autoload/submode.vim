@@ -447,14 +447,14 @@ function! s:on_leaving_submode(submode)  "{{{2
   if (s:original_showmode || g:submode_always_show_submode)
   \  && s:may_override_showmode_p(mode())
     if s:insert_mode_p(mode())
-      let cussor_position = getpos('.')
+      let cursor_position = getpos('.')
     endif
 
       " BUGS: :redraw! doesn't redraw 'showmode'.
     execute "normal! \<C-l>"
 
     if s:insert_mode_p(mode())
-      call setpos('.', cussor_position)
+      call setpos('.', cursor_position)
     endif
   endif
   if !g:submode_keep_leaving_key && getchar(1) isnot 0
