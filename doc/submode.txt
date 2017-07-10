@@ -90,8 +90,11 @@ COMMANDS					*submode-commands*
 :SubmodeRestoreOptions				*:SubmodeRestoreOptions*
 			Ex command version of |submode#restore_options()|.
 
+:SubmodeUndo				*:SubmodeUndo*
+			Undo all modifications made in last submode execution.
 
-
+:SubmodeRedo				*:SubmodeRedo*
+			Redo all modifications made in last submode execution.
 
 ------------------------------------------------------------------------------
 FUNCTIONS					*submode-functions*
@@ -271,6 +274,9 @@ LIMITATIONS ~
   ".........." is showed at the bottom right corner while a submode is active.
   This is to hide a part of internal key mappings for submode key mappings.
 
+- The Submode Undo/Redo feature works only with the last submode execution
+  and only with the current vim session (it does not keep a history).
+
 
 PROBLEMS ~
 
@@ -281,6 +287,9 @@ PROBLEMS ~
 
 - The current API to define submode key mappings is somewhat low-level.
   It might be useful to add |:map|-like commands for readability.
+
+- The Submode Undo/Redo feature may not work properly if a lot of
+  modifications are made after leaving submode.
 
 
 
