@@ -388,7 +388,11 @@ endfunction
 
 
 function! s:named_key_before_entering_with(submode, lhs)  "{{{2
-  return printf('<Plug>(submode-before-entering:%s:with:%s)', a:submode, a:lhs)
+  return printf(
+  \   '<Plug>(submode-before-entering:%s:with:%s)',
+  \   a:submode,
+  \   substitute(a:lhs, '<\|>', '', 'g')
+  \   )
 endfunction
 
 
